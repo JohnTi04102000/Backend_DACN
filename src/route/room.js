@@ -8,10 +8,6 @@ const initRoomRoute = (app) => {
   router.post("/create-room", roomController.createNewRoom);
   router.patch("/update-room", roomController.updateRoom);
   router.delete("/delete-room/:id", roomController.deleteRoom);
-//   router.get("/get-company/:id", companyController.getCompanyById);
-//   router.post("/create-company", companyController.createCompany);
-//   router.put("/update-company", companyController.updateCompany);
-//   router.delete("/delete-company/:id", companyController.deleteCompany);
 
 
   // //Tiền tố phía trước router

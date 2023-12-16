@@ -2,6 +2,7 @@ import express from "express";
 import configViewEngine from "./configs/viewEngine";
 import initRoomRoute from "./route/room";
 import initScheduleRoute from "./route/schedule";
+import initUserRoute from "./route/user";
 import cors from 'cors'
 
 require("dotenv").config();
@@ -28,6 +29,7 @@ configViewEngine(app);
 //init web route
 initRoomRoute(app);
 initScheduleRoute(app);
+initUserRoute(app);
 
 //Config local
 // app.listen(port, () => {
