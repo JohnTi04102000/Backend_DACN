@@ -16,7 +16,7 @@ const app = express();
 //Config server
 app.use(cors());
 const port = process.env.PORT;
-const publicIPAddress = '103.98.161.6';
+const publicIPAddress = '103.98.160.26';
 
 //Config body-parse to send data
 app.use(express.urlencoded({ extended: true }));
