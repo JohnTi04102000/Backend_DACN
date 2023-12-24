@@ -1,25 +1,24 @@
 import pool from "../configs/connectDB";
 
-let handleLogin = (user_name, password) => {
+let handleLogin = (email, password) => {
     return new Promise( async (resolve, reject) => {
         try{
             let userData = {};
-            let isExist = await checkUser_name(user_name);
+            let isExist = await checkEmail(email);
             // console.log('check exist', isExist);
             if(isExist) {
-                const [rows, fields] = await pool.execute("SELECT password FROM account_user where user_name = ?", [user_name]);
-                const pass_User = rows[0].password;
-                //console.log('pass: ' + pass_User);
+                const [rows, fields] = await pool.execute("SELECT PASSWORD FROM USER where EMAIL = ?", [email]);
+                const pass_User = rows[0].PASSWORD;
+                console.log('pass: ' + pass_User);
                 let result = password.localeCompare(pass_User);
                 //console.log(pass_User + " - " + password);
                 if(result === 0)
                 {
-                    let getUser = await getInfoUser(user_name);
+                    let getUser = await getInfoUser(email);
                     // console.log('getUser: ' + JSON.stringify(getUser))
                     userData.errCode = 3;
                     userData.message = "Login successful";
-                    userData.userInfo = getUser[0].id;
-                    userData.account_user = getUser[0].account_user;
+                    userData.userInfo = getUser[0].USERID;
                 }
                 else{
                     userData.errCode = 2;
@@ -29,7 +28,7 @@ let handleLogin = (user_name, password) => {
             }
             else{
                 userData.errCode = 1;
-                userData.message = "Your user_name not found";
+                userData.message = "Your email not found";
             }
             resolve(userData);
         }
@@ -39,10 +38,10 @@ let handleLogin = (user_name, password) => {
     })
 }
 
-let checkUser_name = (user_name) => {
+let checkEmail = (email) => {
     return new Promise( async (resolve, reject) => {
         try{
-            const [user, fields] = await pool.execute("SELECT * FROM account_user where user_name = ?", [user_name]);
+            const [user, fields] = await pool.execute("SELECT * FROM USER where EMAIL = ?", [email]);
             if(!user.length)
             {
                 resolve(false);
@@ -57,13 +56,13 @@ let checkUser_name = (user_name) => {
     })
 }
 
-let getInfoUser = (user_name) => {
+let getInfoUser = (email) => {
     return new Promise( async (resolve, reject) => {
         try{
             let data = {};
-            const [rows] = await pool.execute("SELECT * FROM account_user where user_name = ?", [user_name]);
-            const id_User = rows[0].id;
-            const [user] = await pool.execute("SELECT * FROM info_user where id = ?", [id_User]);
+            const [rows] = await pool.execute("SELECT * FROM USER where EMAIL = ?", [email]);
+            const id_User = rows[0].USERID;
+            const [user] = await pool.execute("SELECT * FROM USER where USERID = ?", [id_User]);
             
             if(!user.length)
             {
@@ -80,21 +79,9 @@ let getInfoUser = (user_name) => {
     })
 }
 
-let handleSignUp = (user_name, password, userId) => {
-    return new Promise( async (resolve, reject) => {
-        try{
-             
-        }
-        catch(err){
-            reject(e);
-        }
-    })
-
-}
 
 
 module.exports = {
     handleLogin,
-    handleSignUp,
-    checkUser_name
+    checkEmail
 }

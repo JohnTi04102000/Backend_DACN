@@ -8,6 +8,19 @@ let getAllRoom = async (req, res) => {
   });
 };
 
+let getRoomById = async (req, res) => {
+  try{
+    let id = req.params.id;
+    const [rows, fields] = await pool.execute("SELECT * FROM ROOM WHERE ROOMID = ?", [id]); 
+    return res.status(200).json({
+      data: rows,
+    });
+  }
+  catch(err){
+    console.error(err);
+  }
+}
+
 let createNewRoom = async (req, res) => {
   console.log("create-schedule ", req.body);
   let { scheduleID, userID, room_Code, password, time_Create, room_Name } = req.body;
@@ -75,10 +88,11 @@ let updateRoom = async (req, res) => {
   }
 };
 
+
 let deleteRoom = async (req, res) => {
   try {
     let id_Room = req.params.id;
-    console.log("id_Schedule: " + id_Room);
+    console.log("id_room: " + id_Room);
     if (!id_Room) {
       return res.status(404).json({
         message: "Delete room failed",
@@ -101,6 +115,7 @@ module.exports = {
     getAllRoom,
     createNewRoom,
     updateRoom,
-    deleteRoom
+    deleteRoom,
+    getRoomById
   };
   

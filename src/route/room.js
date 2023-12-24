@@ -5,6 +5,7 @@ let router = express.Router();
 
 const initRoomRoute = (app) => {
   router.get("/rooms", roomController.getAllRoom);
+  router.get("/room/:id", roomController.getRoomById);
   router.post("/create-room", roomController.createNewRoom);
   router.patch("/update-room", roomController.updateRoom);
   router.delete("/delete-room/:id", roomController.deleteRoom);

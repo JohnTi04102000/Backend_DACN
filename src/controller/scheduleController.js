@@ -8,6 +8,19 @@ let getAllSchedule = async (req, res) => {
   });
 };
 
+let getScheduleById = async (req, res) => {
+  try{
+    let id = req.params.id;
+    const [rows, fields] = await pool.execute("SELECT * FROM SCHEDULE WHERE SCHEDULEID = ?", [id]); 
+    return res.status(200).json({
+      data: rows,
+    });
+  }
+  catch(err){
+    console.error(err);
+  }
+}
+
 let createNewSchedule = async (req, res) => {
   console.log("create-schedule ", req.body);
   let { userID, timeStart, timeFinish } = req.body;
@@ -102,6 +115,7 @@ let deleteSchedule = async (req, res) => {
 
 module.exports = {
   getAllSchedule,
+  getScheduleById,
   createNewSchedule,
   updateSchedule,
   deleteSchedule,

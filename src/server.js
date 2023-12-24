@@ -3,6 +3,7 @@ import configViewEngine from "./configs/viewEngine";
 import initRoomRoute from "./route/room";
 import initScheduleRoute from "./route/schedule";
 import initUserRoute from "./route/user";
+import initAPIAccount from "./route/login";
 import cors from 'cors'
 
 require("dotenv").config();
@@ -30,6 +31,7 @@ configViewEngine(app);
 initRoomRoute(app);
 initScheduleRoute(app);
 initUserRoute(app);
+initAPIAccount(app);
 
 //Config local
 // app.listen(port, () => {
